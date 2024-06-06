@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-  // Assuming you have a types file where Todo interface is defined
+// Assuming you have a types file where Todo interface is defined
 
 // Define the type for the Todo item
 interface Todo {
@@ -18,6 +18,7 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     getTodos: builder.query<Todo[], void>({
       query: () => "/todos",
+      transformResponse: (res: Todo[]) => res.sort((a, b) => b.id - a.id),
       providesTags: ["Todos"],
     }),
     addTodo: builder.mutation<Todo, Partial<Todo>>({
@@ -36,7 +37,10 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Todos"],
     }),
-    deleteTodo: builder.mutation<{ success: boolean; id: number }, { id: number }>({
+    deleteTodo: builder.mutation<
+      { success: boolean; id: number },
+      { id: number }
+    >({
       query: ({ id }) => ({
         url: `/todos/${id}`,
         method: "DELETE",
