@@ -12,7 +12,7 @@ interface Todo {
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000",
+    baseUrl: "https://jsonplaceholder.typicode.com",
   }),
   tagTypes: ["Todos"],
   endpoints: (builder) => ({
